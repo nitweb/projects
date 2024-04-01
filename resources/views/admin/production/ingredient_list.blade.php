@@ -77,8 +77,7 @@
                                 <table class="table border table-responsive table-striped">
                                     <thead class="bg-body">
                                         <tr>
-                                            <span id="ingredient_id4"></span>
-                                            <th class="text-center">Ingredient</th>
+                                            <th class="text-center" width="20%">Ingredient</th>
                                             {{-- <th class="text-center">Current Stock</th> --}}
                                             <th class="text-center">Quantity</th>
                                             <th class="text-center">Unit Price</th>
@@ -97,7 +96,7 @@
                                                     <select name="ingredient_id[]" id="ingredient_1"
                                                         class="form-control form-select  ingredient" required=""
                                                         data-parsley-required-message="Ingredient Id is required">
-                                                        {{-- <option selected value="">Select Ingredient</option> --}}
+                                                        <option selected value="">Select Ingredient</option>
                                                         @foreach ($ingredients as $ingredient)
                                                             <option value="{{ $ingredient->id }}"
                                                                 {{ $ingredient->id == $value->ingredient_id ? 'selected' : '' }}>
@@ -107,25 +106,28 @@
                                                     </select>
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="text" class="form-control stock"
+                                                    <input type="text" class="form-control stock quantity"
                                                         placeholder="Stock Quantity" name="stock_qty[]"
                                                         value="{{ $value->quantity }}" id="stock_qty_1" readonly>
                                                 </td>
-                                                <td class="text-center">
+                                                {{-- <td class="text-center">
                                                     <input type="text" class="form-control quantity"
                                                         placeholder="Quantity" name="selling_qty[]" id="selling_qty"
                                                         required=""
                                                         data-parsley-required-message="Quantity Id is required">
-                                                </td>
+                                                </td> --}}
                                                 <td class="text-center">
                                                     <input type="text" class="form-control unit_price"
                                                         placeholder="Unit Price" name="unit_price[]" id="unit_price"
-                                                        required=""
+                                                        required="" value="{{ $ingredient_unit_price->unit_price }}"
                                                         data-parsley-required-message="Unit Price is required">
                                                 </td>
+                                                @php
+                                                    $unit_total = $value->quantity * $ingredient_unit_price->unit_price;
+                                                @endphp
                                                 <td class="text-center">
-                                                    <input type="text" class="form-control selling_price"
-                                                        placeholder="Total" readonly name="selling_price[]">
+                                                    <input type="text" class="form-control unit_total" value="{{ $unit_total }}"
+                                                        placeholder="Total" readonly name="unit_total[]">
                                                 </td>
                                                 {{-- <td class="text-center">
                                                     <button type="button" onclick="removeRow(event)"
@@ -139,7 +141,7 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th colspan="3"> </th>
+                                            <th colspan="2"> </th>
                                             <th class="text-end"> Sub Total</th>
                                             <th>
                                                 <input type="text" readonly class="form-control" name="sub_total"
@@ -147,7 +149,7 @@
                                             </th>
                                         </tr>
                                         <tr>
-                                            <th colspan="3"> </th>
+                                            <th colspan="2"> </th>
                                             <th class="text-end" width="50%">
                                                 <input type="text" name="salary" id="salary" class="form-control"
                                                     placeholder="Salary">
@@ -158,51 +160,51 @@
                                             </th>
                                         </tr>
                                         <tr>
-                                            <th colspan="3"> </th>
+                                            <th colspan="2"> </th>
                                             <th class="text-end" width="50%">
                                                 <input type="text" name="interest" id="interest"
                                                     class="form-control" placeholder="Interest ">
                                             </th>
                                             <th>
                                                 <input type="number" name="interest_amount" id="interest_amount"
-                                                    class="form-control" placeholder="Enter Amount">
+                                                    class="form-control" placeholder="Enter Amount" value="0">
                                             </th>
                                         </tr>
                                         <tr>
-                                            <th colspan="3"> </th>
+                                            <th colspan="2"> </th>
                                             <th class="text-end" width="50%">
                                                 <input type="text" name="rent" id="rent" class="form-control"
                                                     placeholder="Rent ">
                                             </th>
                                             <th>
                                                 <input type="number" name="rent_amount" id="rent_amount"
-                                                    class="form-control" placeholder="Enter Amount">
+                                                    class="form-control" placeholder="Enter Amount" value="0">
                                             </th>
                                         </tr>
                                         <tr>
-                                            <th colspan="3"> </th>
+                                            <th colspan="2"> </th>
                                             <th class="text-end" width="50%">
                                                 <input type="text" name="transport" id="transport"
                                                     class="form-control" placeholder="Transport">
                                             </th>
                                             <th>
                                                 <input type="number" name="transport_amount" id="transport_amount"
-                                                    class="form-control" placeholder="Enter Amount">
+                                                    class="form-control" placeholder="Enter Amount" value="0">
                                             </th>
                                         </tr>
                                         <tr>
-                                            <th colspan="3"> </th>
+                                            <th colspan="2"> </th>
                                             <th class="text-end" width="50%">
                                                 <input type="text" name="travelling" id="travelling"
                                                     class="form-control" placeholder="Travelling">
                                             </th>
                                             <th>
                                                 <input type="number" name="travelling_amount" id="travelling_amount"
-                                                    class="form-control" placeholder="Enter Amount">
+                                                    class="form-control" placeholder="Enter Amount" value="0">
                                             </th>
                                         </tr>
                                         <tr>
-                                            <th colspan="3"> </th>
+                                            <th colspan="2"> </th>
                                             <th class="text-end" width="50%">
                                                 <input type="text" name="entertainment" id="entertainment"
                                                     class="form-control" placeholder="Entertainment">
@@ -210,33 +212,33 @@
                                             <th>
                                                 <input type="number" name="entertainment_amount"
                                                     id="entertainment_amount" class="form-control"
-                                                    placeholder="Enter Amount">
+                                                    placeholder="Enter Amount" value="0">
                                             </th>
                                         </tr>
                                         <tr>
-                                            <th colspan="3"> </th>
+                                            <th colspan="2"> </th>
                                             <th class="text-end" width="50%">
                                                 <input type="text" name="printing" id="printing"
                                                     class="form-control" placeholder="Printing">
                                             </th>
                                             <th>
                                                 <input type="number" name="printing_amount" id="printing_amount"
-                                                    class="form-control" placeholder="Enter Amount">
+                                                    class="form-control" placeholder="Enter Amount" value="0">
                                             </th>
                                         </tr>
                                         <tr>
-                                            <th colspan="3"> </th>
+                                            <th colspan="2"> </th>
                                             <th class="text-end" width="50%">
                                                 <input type="text" name="license" id="license" class="form-control"
                                                     placeholder="License">
                                             </th>
                                             <th>
                                                 <input type="number" name="license_amount" id="license_amount"
-                                                    class="form-control" placeholder="Enter Amount">
+                                                    class="form-control" placeholder="Enter Amount" value="0">
                                             </th>
                                         </tr>
                                         <tr>
-                                            <th colspan="3"> </th>
+                                            <th colspan="2"> </th>
                                             <th class="text-end" width="50%">
                                                 <input type="text" name="mobile_bill" id="mobile_bill"
                                                     class="form-control" placeholder="Mobile Bill">
@@ -247,7 +249,7 @@
                                             </th>
                                         </tr>
                                         <tr>
-                                            <th colspan="3"> </th>
+                                            <th colspan="2"> </th>
                                             <th class="text-end" width="50%">
                                                 <input type="text" name="selling" id="selling" class="form-control"
                                                     placeholder="Selling">
@@ -258,7 +260,7 @@
                                             </th>
                                         </tr>
                                         <tr>
-                                            <th colspan="3"> </th>
+                                            <th colspan="2"> </th>
                                             <th class="text-end" width="50%">
                                                 <input type="text" name="internet" id="internet"
                                                     class="form-control" placeholder="Internet">
@@ -269,7 +271,7 @@
                                             </th>
                                         </tr>
                                         <tr>
-                                            <th colspan="3"> </th>
+                                            <th colspan="2"> </th>
                                             <th class="text-end" width="50%">
                                                 <input type="text" name="equipment" id="equipment"
                                                     class="form-control" placeholder="Equipment">
@@ -280,7 +282,7 @@
                                             </th>
                                         </tr>
                                         <tr>
-                                            <th colspan="3"> </th>
+                                            <th colspan="2"> </th>
                                             <th class="text-end" width="50%">
                                                 <input type="text" name="misc" id="misc" class="form-control"
                                                     placeholder="Misc">
@@ -291,7 +293,7 @@
                                             </th>
                                         </tr>
                                         <tr>
-                                            <th colspan="3"> </th>
+                                            <th colspan="2"> </th>
                                             <th class="text-end" width="50%">
                                                 <input type="text" name="profit" id="profit" class="form-control"
                                                     placeholder="Profit">
@@ -302,7 +304,7 @@
                                             </th>
                                         </tr>
                                         <tr>
-                                            <th colspan="3"> </th>
+                                            <th colspan="2"> </th>
                                             <th class="text-end"> Grand Total</th>
                                             <th>
                                                 <input type="text" readonly class="form-control"
@@ -433,16 +435,13 @@
     <script>
         $(document).ready(function() {
 
-            $(document).on("keyup click", ".unit_price,.quantity", function() {
+            $(document).on("load", ".unit_price,.quantity", function() {
                 let product_qty = $(this).closest('tr').find('input.quantity').val();
                 let unit_price = $(this).closest('tr').find('input.unit_price').val();
                 let total = unit_price * product_qty;
                 console.log(total);
-                $(this).closest('tr').find('input.selling_price').val(total);
+                $(this).closest('tr').find('input.unit_total').val(total);
                 totalAmountOfPrice();
-
-                let taxId = $('#tax_id').val();
-                taxUpdate(taxId);
 
             });
         });
@@ -582,8 +581,10 @@
             let sum = 0;
             let subTotal = 0;
             let total = 0;
-            $('.selling_price').each(function() {
+            $('.unit_total').each(function() {
                 let value = $(this).val();
+
+                console.log("subTotal", value);
                 if (!isNaN(value) && value.length != 0) {
                     sum += parseFloat(value);
                     subTotal += parseFloat(value);
@@ -592,8 +593,8 @@
             $("#sub_total").val(subTotal);
 
             let salary_amount = $("#salary_amount").val();
-            // alert(salary_amount);
-            // let interest_amount = $("#interest_amount").val();
+            alert(salary_amount);
+            let interest_amount = $("#interest_amount").val();
             // let rent_amount = $("#rent_amount").val();
             // let transport_amount = $("#transport_amount").val();
             // let travelling_amount = $("#travelling_amountt").val();
@@ -617,7 +618,7 @@
 
 
             console.log("salary", salary_amount);
-            let total_amount = parseFloat(salary_amount) + parseFloat(subTotal);
+            let total_amount = parseFloat(salary_amount) + parseFloat(interest_amount) + parseFloat(subTotal);
 
             $("#estimated_amount").val(total_amount);
             console.log("total", subTotal);

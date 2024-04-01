@@ -11,8 +11,11 @@ use App\Models\Customer;
 use App\Models\Employee;
 use App\Models\Ingredient;
 use App\Models\Product;
+use App\Models\PurchaseMeta;
 use App\Models\Tax;
 use Illuminate\Http\Request;
+
+use function PHPUnit\Framework\isEmpty;
 
 class ProductionController extends Controller
 {
@@ -47,6 +50,8 @@ class ProductionController extends Controller
 
         foreach ($ingredient_list as $item) {
             $ingredient_details = BatteryIngredientDetail::where('battery_id', $item->id)->get();
+
+            $ingredient_unit_price = PurchaseMeta::where('ingredient_id', $item->id)->first();
         }
 
         $ingredients = Ingredient::orderBy('name', 'ASC')->get();
@@ -54,6 +59,17 @@ class ProductionController extends Controller
         $products = Product::orderBy('name', 'ASC')->get();
         $taxes = Tax::get();
 
-     return view('admin.production.ingredient_list', compact('ingredient_details', 'ingredients', 'upInfo', 'categories', 'products', 'taxes'));
+        if ($ingredient_unit_price) {
+            return view('admin.production.ingredient_list', compact('ingredient_details', 'ingredients', 'upInfo', 'categories', 'products', 'taxes', 'ingredient_unit_price'));
+
+        } else {
+
+            $notification = array(
+                'message' => 'Please Purchase Ingredient First!',
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with($notification);
+        }
+
     }
 }
