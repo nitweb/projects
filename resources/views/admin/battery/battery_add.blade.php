@@ -13,9 +13,8 @@
                                 <div class="col-md-4">
                                     <div class="md-3">
                                         <label for="example-text-input" class="col-sm-12 col-form-label">Category </label>
-                                        <select name="category_id" id="category_1"
-                                            class="form-control form-select category" required=""
-                                            data-parsley-required-message="Category Id is required">
+                                        <select name="category_id" id="category_1" class="form-control form-select category"
+                                            required="" data-parsley-required-message="Category Id is required">
                                             <option selected value="">Select Category</option>
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category->id }}">
@@ -53,7 +52,7 @@
                                             <tr class="tr">
                                                 <td class="text-center">
                                                     <select name="ingredient_id[]" id="ingredient_1"
-                                                        class="form-control form-select" required=""
+                                                        class="form-control form-select ingredient" required=""
                                                         data-parsley-required-message="Ingredient is required">
                                                         <option selected value="">Select Ingredient</option>
                                                         @foreach ($ingredients as $ingredient)
@@ -64,15 +63,15 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control qty" id="qty_1" placeholder="Quantity with Wastage"
-                                                        name="quantity[]">
+                                                    <input type="text" class="form-control qty" id="qty_1"
+                                                        placeholder="Quantity with Wastage" name="quantity[]">
 
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control wastage" id="wastage_1" placeholder="Wastage"
-                                                        name="wastage[]">
+                                                    <input type="text" class="form-control wastage" id="wastage_1"
+                                                        placeholder="Wastage" name="wastage[]">
                                                 </td>
-                                                 <td class="text-center">
+                                                <td class="text-center">
                                                     <button type="button" onclick="removeRow(event)"
                                                         class="btn btn-danger">
                                                         <i class="fa fa-times" aria-hidden="true"></i>
@@ -163,24 +162,6 @@
         </div>
     </div>
 
-
-    {{-- js --}}
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-
-
-
-    <script>
-        $(document).ready(function() {
-
-            $(document).on("keyup", ".qty,.wastage", function() {
-                let product_qty = $(this).closest('tr').find('input.quantity').val();
-                // let wastage = $(this).closest('tr').find('input.wastage').val();
-                totalQuantity();
-            });
-
-
-        });
-    </script>
     <script>
         let count = 2;
 
@@ -262,186 +243,20 @@
         });
     </script>
 
-    <script>
-        $(document).on("change", "#product_1", function() {
-            const id = $(this).find('option:selected').val();
-            // alert(id);
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            $.ajax({
-                url: '/get/product/weight',
-                type: "post",
-                data: {
-                    id: id,
-                },
-
-                success: function(data) {
-                    $("#weight").val(data);
-                }
-            });
-        });
-    </script>
-
-    <!-- paid status -->
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#paid_status').on('change', function() {
-                let paidStatus = $(this).val();
-                console.log('paidSource', paidStatus);
-                if (paidStatus) {
-                    $('#paid_source_col').show();
-                    $('#vat_tax_col').show();
-                }
-
-                if (paidStatus == 'partial_paid') {
-                    $('#paid_amount').show();
-                } else {
-                    $('#paid_amount').hide();
-                }
-
-                if (paidStatus == 'full_due') {
-                    $('#paid_source_col').hide();
-                }
-
-            });
-
-
-            $("#stock_in_type").on('change', function() {
-                let stock_type = $(this).val();
-                // alert(stock_type);
-                if (stock_type == 'warehouse') {
-                    $('#warehouse_info').show();
-                } else {
-                    $('#warehouse_info').hide();
-                }
-            });
-
-            $('#paid_source').on('change', function() {
-                let paidSource = $(this).val();
-                console.log('paidSource', paidSource);
-                if (paidSource == 'bank') {
-                    $('#bank-info').show();
-                    $('#online-bank-row').hide();
-                    $('#mobile-bank-info').hide();
-                } else if (paidSource == 'online-banking') {
-                    $('#bank-info').hide();
-                    $('#online-bank-row').show();
-                    $('#mobile-bank-info').hide();
-                } else if (paidSource == 'mobile-banking') {
-                    $('#bank-info').hide();
-                    $('#online-bank-row').hide();
-                    $('#mobile-bank-info').show();
-                }
-            });
-
-            $('#vat_tax_field').on('change', function() {
-                let vatTaxField = $(this).val();
-                console.log('vat_tax_field', vatTaxField);
-                if (vatTaxField == 'with-vat-tax') {
-                    $('.vat').show();
-                    $('.tax').show();
-                } else {
-                    $('.vat').hide();
-                    $('.tax').hide();
-                }
-            });
-
-            // new customer
-            $('#company_id').on('change', function() {
-                let compnayId = $(this).val();
-                console.log(compnayId);
-                if (compnayId == '0') {
-                    $('#new_company').show();
-                    $('#default_addBtn').hide();
-                } else {
-                    $('#new_company').hide();
-                    $('#default_addBtn').show();
-                }
-            });
-        });
-    </script>
-
-
 
     <script>
-        $(document).on("change", ".stock_in_type", function() {
+        $(document).on("change keyup", ".qty", function() {
             const id = $(this).closest('tr').find('option:selected').val();
-
-            const warehouse_id = $("#warehouse_id").val();
-            let product_id = $(this).closest('tr').find('.product').val();
-
-            let innerId = $(this).closest('tr').find('.innerStock').attr('id');
-            let masterId = $(this).closest('tr').find('.masterStock').attr('id');
-
-            let innerNum = innerId.split('_');
-            let masterNum = masterId.split('_');
+            let qtyVal = $(this).closest('tr').find('.qty').val();
 
 
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
+            let wastageId = $(this).closest('tr').find('.wastage').attr('id');
+            let wastageNum = wastageId.split('_');
+            let wastage = qtyVal * 5 / 100;
 
-            $.ajax({
-                url: '/get/packet/stock',
-                type: "post",
-                data: {
-                    warehouse_id: warehouse_id,
-                    product_id: product_id,
-                },
-
-                success: function(data) {
-                    console.log(data);
-                    $("#innerStock_" + innerNum[1]).text(data.inner);
-                    $("#masterStock_" + masterNum[1]).text(data.master);
-                }
-            });
+            $("#wastage_" + wastageNum[1]).val(wastage);
         });
     </script>
-    {{-- <script>
-        $(document).on("change", ".stock_in_type", function() {
-            const id = $(this).closest('tr').find('option:selected').val();
-
-            const warehouse_id = $("#warehouse_id").val();
-
-            // alert(warehouse_id);
-
-
-            let product_id = $('.product').closest('tr').find('option:selected').val();
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            $.ajax({
-                url: '/get/packet/price',
-                type: "post",
-                data: {
-                    warehouse_id: warehouse_id,
-                    product_id: product_id,
-                },
-
-                success: function(data) {
-
-                    console.log('data', data);
-                    // $total.val(data);
-                    total.val(data);
-                    // $(this).closest('tr').find('input.total').val(data);
-                    // total = data;
-                    // $("#total" + num[1]).val(data);
-                    totalAmountOfPrice();
-                }
-            });
-        });
-    </script> --}}
 
 
     <script>
@@ -485,21 +300,5 @@
         $(document).on('keyup', '#discount_rate', function() {
             totalAmountOfPrice();
         });
-
-
-        function totalQuantity() {
-            let quantity = 0;
-            $('#qty_1').each(function() {
-                let value = $(this).val();
-                if (!isNaN(value) && value.length != 0) {
-                    // quantity += parseFloat(value);
-                    quantity = value * 5 / 100;
-                }
-                $("#wastage_1").val(quantity);
-
-            });
-            console.log('quantity',quantity);
-
-        }
     </script>
 @endsection

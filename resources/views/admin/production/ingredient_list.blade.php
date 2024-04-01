@@ -174,7 +174,7 @@
                                             <th colspan="2"> </th>
                                             <th class="text-end" width="50%">
                                                 <input type="text" name="rent" id="rent" class="form-control"
-                                                    placeholder="Rent ">
+                                                    placeholder="Rent">
                                             </th>
                                             <th>
                                                 <input type="number" name="rent_amount" id="rent_amount"
@@ -245,7 +245,7 @@
                                             </th>
                                             <th>
                                                 <input type="number" name="mobile_bill_amount" id="mobile_bill_amount"
-                                                    class="form-control" placeholder="Enter Amount">
+                                                    class="form-control" placeholder="Enter Amount" value="0">
                                             </th>
                                         </tr>
                                         <tr>
@@ -256,7 +256,7 @@
                                             </th>
                                             <th>
                                                 <input type="number" name="selling_amount" id="selling_amount"
-                                                    class="form-control" placeholder="Enter Amount">
+                                                    class="form-control" placeholder="Enter Amount" value="0">
                                             </th>
                                         </tr>
                                         <tr>
@@ -267,7 +267,7 @@
                                             </th>
                                             <th>
                                                 <input type="number" name="internet_amount" id="internet_amount"
-                                                    class="form-control" placeholder="Enter Amount">
+                                                    class="form-control" placeholder="Enter Amount" value="0">
                                             </th>
                                         </tr>
                                         <tr>
@@ -278,7 +278,7 @@
                                             </th>
                                             <th>
                                                 <input type="number" name="equipment_amount" id="equipment_amount"
-                                                    class="form-control" placeholder="Enter Amount">
+                                                    class="form-control" placeholder="Enter Amount" value="0">
                                             </th>
                                         </tr>
                                         <tr>
@@ -289,7 +289,7 @@
                                             </th>
                                             <th>
                                                 <input type="number" name="misc_amount" id="misc_amount"
-                                                    class="form-control" placeholder="Enter Amount">
+                                                    class="form-control" placeholder="Enter Amount" value="0">
                                             </th>
                                         </tr>
                                         <tr>
@@ -300,7 +300,7 @@
                                             </th>
                                             <th>
                                                 <input type="number" name="profit_amount" id="profit_amount"
-                                                    class="form-control" placeholder="Enter Amount">
+                                                    class="form-control" placeholder="Enter Amount" value="0">
                                             </th>
                                         </tr>
                                         <tr>
@@ -309,7 +309,7 @@
                                             <th>
                                                 <input type="text" readonly class="form-control"
                                                     name="estimated_amount" id="estimated_amount"
-                                                    placeholder="Grand Total" value="0">
+                                                    placeholder="Grand Total">
                                             </th>
                                         </tr>
                                     </tfoot>
@@ -595,15 +595,15 @@
             let salary_amount = $("#salary_amount").val();
             alert(salary_amount);
             let interest_amount = $("#interest_amount").val();
-            // let rent_amount = $("#rent_amount").val();
-            // let transport_amount = $("#transport_amount").val();
-            // let travelling_amount = $("#travelling_amountt").val();
-            // let entertainment_amount = $("#entertainment_amount").val();
-            // let printing_amount = $("#printing_amount").val();
-            // let license_amount = $("#license_amount").val();
-            // let mobile_bill_amount = $("#mobile_bill_amount").val();
-            // let equipment_amount = $("#equipment_amount").val();
-            // let misc_amount = $("#misc_amount").val();
+            let rent_amount = $("#rent_amount").val();
+            let transport_amount = $("#transport_amount").val();
+            let travelling_amount = $("#travelling_amountt").val();
+            let entertainment_amount = $("#entertainment_amount").val();
+            let printing_amount = $("#printing_amount").val();
+            let license_amount = $("#license_amount").val();
+            let mobile_bill_amount = $("#mobile_bill_amount").val();
+            let equipment_amount = $("#equipment_amount").val();
+            let misc_amount = $("#misc_amount").val();
 
 
             // let delivery_charge = $("#delivery_charge").val();
@@ -616,12 +616,11 @@
             //     salary_amount = $("#salary_amount").val();
             // }
 
+            let others_amount = parseFloat(salary_amount) + parseFloat(interest_amount) + parseFloat(rent_amount) + parseFloat(transport_amount) + parseFloat(travelling_amount) + parseFloat(entertainment_amount) + parseFloat(printing_amount) + parseFloat(license_amount) + parseFloat(mobile_bill_amount) + parseFloat(equipment_amount) + parseFloat(misc_amount);
 
-            console.log("salary", salary_amount);
-            let total_amount = parseFloat(salary_amount) + parseFloat(interest_amount) + parseFloat(subTotal);
+            let total_amount = parseFloat(subTotal) + parseFloat(others_amount);
 
             $("#estimated_amount").val(total_amount);
-            console.log("total", subTotal);
         }
     </script>
 
